@@ -1,4 +1,4 @@
-# TikTok WebTool
+# TikTok WebTool (OPEN-SOURCE)
 
 Stop TikTok from ruining your video quality. This tool patches your MP4 files so TikTok thinks they are already high quality and leaves them alone.
 
@@ -38,7 +38,7 @@ That's it. No apps to install. No Nothing
 
 ---
 
-## Chrome Extension (coming soon)
+## Chrome Extension (coming soon MAYBE)
 
 A Chrome extension is being made that will add a button right on TikTok's website so you can patch videos without going to the web tool. It is not ready yet.
 
