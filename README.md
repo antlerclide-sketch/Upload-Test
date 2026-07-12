@@ -8,25 +8,23 @@ Stop TikTok from ruining your video quality. This tool patches your MP4 files so
 
 ## What this does
 
-When you download a video from TikTok and re-upload it, TikTok compresses it again and makes it look bad (540p).
+When you Post a video, TikTok compresses it and makes it look bad (540p).
 
-This tool tricks TikTok by editing the video's internal metadata. The video itself stays exactly the same. TikTok then says "oh this is already high quality" and gives you 1080p60.
+This tool tricks TikTok by editing the video's internal metadata. The video itself stays exactly the same. TikTok then says "oh this is already high quality" and gives you 1080p60/your video's resolution/fps.
 
 ---
 
-## How to use (super simple)
+## How to use (super simple okay)
 
-### Step 1: Get a video from TikTok
-
-Download any video from TikTok (the normal way).
+### Step 1: Find your video
 
 ### Step 2: Open the web tool
 
-Go to **https://paschafps.github.io/tiktok-webtool/** (once uploaded)
+Go to **https://paschafps.github.io/tiktok-webtool/**
 
 ### Step 3: Drop your video
 
-Drag your downloaded MP4 file onto the page. Wait a few seconds.
+Drag your MP4 file onto the page. Wait a few seconds.
 
 ### Step 4: Download the patched video
 
@@ -34,9 +32,9 @@ Click "Download patched video". You now have a file named something like `video_
 
 ### Step 5: Upload to TikTok
 
-Upload that patched file to TikTok. It should now be 1080p60 instead of blurry 540p.
+Upload that patched file to TikTok. It should now be your video's resolution (for example 1080p60) instead of blurry compressed 540p.
 
-That's it. Four clicks. No apps to install. No signups.
+That's it. No apps to install. No Nothing
 
 ---
 
@@ -52,7 +50,7 @@ A Chrome extension is being made that will add a button right on TikTok's websit
 
 - Make sure the file ends in `.mp4`
 - Try downloading a fresh video from TikTok (not one you already edited)
-- If you get an error message, tell me about it on GitHub
+- If you get an error message, tell me about it on GitHub or join my discord server: discord.gg/9hw9xJbFJ5
 
 ---
 
@@ -62,7 +60,7 @@ A Chrome extension is being made that will add a button right on TikTok's websit
 tiktok-webtool/
   webtool/
     index.html          The web tool. Open this in your browser.
-  extension/
+  extension/            //coming soon
     manifest.json       Tells Chrome what the extension does.
     content.js          The code that runs on TikTok pages.
     icon128.png         The icon for the extension.
