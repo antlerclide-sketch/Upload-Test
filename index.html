@@ -325,7 +325,7 @@ function transform(inputBuffer, minDeclared) {
   const stss = findBox(data, 'stss', sb, se);
   const sdtp = findBox(data, 'sdtp', sb, se);
   const ctts = findBox(data, 'ctts', sb, se);
-  if (!stco || !stsz || !stsc || !stts) throw new Error('Missing required stbl atoms');
+  if (!stco || !stsz || !stsc || !stts || !stsd) throw new Error('Missing required stbl atoms');
 
   // Parse chunk offsets
   const chunkOffsets = [];
@@ -371,6 +371,7 @@ function transform(inputBuffer, minDeclared) {
 
   // Video mdhd
   const vMdhd = findBoxPath(data, ['mdia', 'mdhd'], vt.start + 8, vt.end);
+  if (!vMdhd) throw new Error('No video mdhd');
   const vTimescale = readU32(dv, vMdhd.start + 12);
   const vDuration = readU32(dv, vMdhd.start + 16);
   const vDurationSec = vDuration / vTimescale;
@@ -396,8 +397,8 @@ function transform(inputBuffer, minDeclared) {
     const aStsz = findBox(data, 'stsz', aStbl.start, aStbl.end);
     const aStsc = findBox(data, 'stsc', aStbl.start, aStbl.end);
     const aStts = findBox(data, 'stts', aStbl.start, aStbl.end);
-    const aStsd = findBox(data, 'stsd', aStbl.start, aStbl.end);
     const aMdhd = findBoxPath(data, ['mdia', 'mdhd'], at.start + 8, at.end);
+    if (!aMdhd) throw new Error('No audio mdhd');
     aTimescale = readU32(dv, aMdhd.start + 12);
     const aElst = findBoxPath(data, ['edts', 'elst'], at.start + 8, at.end);
     const aElstSegDur = readU32(dv, aElst.start + 16);
@@ -572,7 +573,10 @@ function transform(inputBuffer, minDeclared) {
     audioMdhd = buildMdhd(data.slice(aMdhdBox.start, aMdhdBox.end), undefined, LANG_UND);
     audioHdlr = buildHdlr('soun', 'SoundHandler');
 
-    const aStsd = findBox(data, 'stsd', at.start + 8, at.end);
+    const aStblBox3 = findBoxPath(data, ['mdia', 'minf', 'stbl'], at.start + 8, at.end);
+    if (!aStblBox3) throw new Error('Missing audio stbl3');
+    const aStsd = findBox(data, 'stsd', aStblBox3.start, aStblBox3.end);
+    if (!aStsd) throw new Error('Missing audio stsd');
     let audioStsd = new Uint8Array(data, aStsd.start, aStsd.size);
     const oldBrBytes = new Uint8Array([oldABr >> 24 & 0xff, oldABr >> 16 & 0xff, oldABr >> 8 & 0xff, oldABr & 0xff]);
     const newBrBytes = new Uint8Array([newABr >> 24 & 0xff, newABr >> 16 & 0xff, newABr >> 8 & 0xff, newABr & 0xff]);
@@ -589,12 +593,13 @@ function transform(inputBuffer, minDeclared) {
       }
     }
 
-    const aStblAudio = findBox(data, 'stbl', at.start + 8, at.end);
-    const aStcoAudio = findBox(data, 'stco', aStblAudio.start, aStblAudio.end);
-    const aStszAudio = findBox(data, 'stsz', aStblAudio.start, aStblAudio.end);
-    const aStscAudio = findBox(data, 'stsc', aStblAudio.start, aStblAudio.end);
-    const aSgpdAudio = findBox(data, 'sgpd', aStblAudio.start, aStblAudio.end);
-    const aSbgpAudio = findBox(data, 'sbgp', aStblAudio.start, aStblAudio.end);
+    const aStblBox4 = findBoxPath(data, ['mdia', 'minf', 'stbl'], at.start + 8, at.end);
+    if (!aStblBox4) throw new Error('Missing audio stbl4');
+    const aStcoAudio = findBox(data, 'stco', aStblBox4.start, aStblBox4.end);
+    const aStszAudio = findBox(data, 'stsz', aStblBox4.start, aStblBox4.end);
+    const aStscAudio = findBox(data, 'stsc', aStblBox4.start, aStblBox4.end);
+    const aSgpdAudio = findBox(data, 'sgpd', aStblBox4.start, aStblBox4.end);
+    const aSbgpAudio = findBox(data, 'sbgp', aStblBox4.start, aStblBox4.end);
     audioSttsNewArr = buildStts(newAStts);
     audioStsc = data.slice(aStscAudio.start, aStscAudio.end);
     audioStsz = data.slice(aStszAudio.start, aStszAudio.end);
