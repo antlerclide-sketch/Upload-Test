@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "TikTok Quality Tool",
+  "version": "1.0.0",
+  "description": "Bypass TikTok compression by patching video metadata in-browser",
+  "icons": {
+    "128": "icon128.png"
+  },
+  "content_scripts": [{
+    "matches": ["*://*.tiktok.com/*"],
+    "js": ["content.js"],
+    "run_at": "document_idle"
+  }]
+}
