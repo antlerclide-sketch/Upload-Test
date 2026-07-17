@@ -20,7 +20,7 @@ This tool tricks TikTok by editing the video's internal metadata. The video itse
 
 ### Step 2: Open the web tool
 
-Go to **https://paschafps.github.io/tiktok-webtool/**
+Go to
 
 ### Step 3: Drop your video
 
